@@ -81,6 +81,16 @@ body {
 	margin: 0;
 }
 
+#v-app{
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+#v-main{
+	min-width: 1200px;
+	flex-grow: 1;
+}
+
 /**
  * Render the `main` element consistently in IE.
  */

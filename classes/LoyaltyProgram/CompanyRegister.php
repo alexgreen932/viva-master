@@ -18,11 +18,9 @@ class CompanyRegister
 
     public function sfwc_add_new_subaccount_form_content()
     {
-
-
-        //return if subbaccount
+        //return if subaccount
         if ($this->is_subaccount()) {
-            return __('You cannot view this content as you are a subaccount.', 'subaccounts-for-woocommerce') .
+            return __('You cannot view this content as you are a sub account. Please switch to parent account.', 'subaccounts-for-woocommerce') .
                 do_shortcode('[sfwc_account_switcher]');
         }
 
@@ -35,14 +33,13 @@ class CompanyRegister
 
         $form_data = $this->get_subaccount_form_data();
 
-
         ob_start();
         ?>
         <form id="sfwc_form_add_subaccount_frontend" method="post">
             <?php wp_nonce_field('sfwc_add_subaccount_frontend_action', 'sfwc_add_subaccount_frontend'); ?>
 
             <?php $this->render_form_field('user_login', 'Username (Company)', true, $form_data); ?>
-            
+
             <div style="display: none">
                 <?php $this->render_form_field('email', 'Email', true, ['value' => $this->get_fake_email(), 'type' => 'text']); ?>
                 <?php $this->render_form_field('master_email', 'Master Email', true, ['value' => $this->get_real_email(), 'type' => 'text']); ?>
@@ -50,6 +47,9 @@ class CompanyRegister
                     $this->render_form_field('custom_' . $i, 'Custom Field ' . $i, false, ['type' => 'text']);
                 } ?>
             </div>
+            <?php $this->render_form_field('billing_tax_info', 'Tax Info', false, $form_data); ?>
+            <?php $this->render_form_field('billing_bank_id', 'Bank ID', false, $form_data); ?>
+            <?php $this->render_form_field('billing_accaunt_id', 'Account ID', false, $form_data); ?>
 
             <?php $this->render_form_field('account_display_name', 'Display Name', false, $form_data); ?>
             <?php $this->render_form_field('billing_address_1', 'Billing Address', false, $form_data); ?>
@@ -59,7 +59,15 @@ class CompanyRegister
             <?php $this->render_form_field('billing_phone', 'Phone', false, $form_data); ?>
             <?php $this->render_form_field('billing_last_name', 'Last Name', false, $form_data); ?>
 
-            <input type="submit" value="<?php echo esc_attr__('Add Subaccount', 'subaccounts-for-woocommerce'); ?>" style="padding:10px 40px;">
+            <div>
+                <input type="submit" name="save_and_new"
+                    value="<?php echo esc_attr__('Save and Add New', 'subaccounts-for-woocommerce'); ?>"
+                    style="padding:10px 40px;">
+                <input type="submit" name="save_and_redirect"
+                    value="<?php echo esc_attr__('Save and go to company list', 'subaccounts-for-woocommerce'); ?>"
+                    style="padding:10px 40px;">
+            </div>
+
         </form>
         <?php
         return ob_get_clean();
@@ -99,13 +107,19 @@ class CompanyRegister
         for ($i = 1; $i <= 8; $i++) {
             update_user_meta($user_id, 'custom_' . $i, sanitize_text_field($_POST['custom_' . $i] ?? ''));
         }
+        update_user_meta($user_id, 'billing_tax_info', sanitize_text_field($_POST['billing_tax_info'] ?? ''));
+        update_user_meta($user_id, 'billing_bank_id', sanitize_text_field($_POST['billing_bank_id'] ?? ''));
+        update_user_meta($user_id, 'billing_accaunt_id', sanitize_text_field($_POST['billing_accaunt_id'] ?? ''));
 
-        $parent_user_id = get_current_user_id();
-        $subaccounts = get_user_meta($parent_user_id, 'sfwc_children', true) ?: [];
-        $subaccounts[] = $user_id;
-        update_user_meta($parent_user_id, 'sfwc_children', $subaccounts);
+        // Handling redirection based on the button clicked
+        if (isset($_POST['save_and_redirect'])) {
+            wp_redirect('https://example.com'); // Redirect to your chosen URL
+            exit;
+        }
 
-        wc_add_notice(__('Subaccount created successfully!', 'subaccounts-for-woocommerce'), 'success');
+        // Default behavior: redirect back to the current page
+        wp_redirect($_SERVER['REQUEST_URI']);
+        exit;
     }
 
     private function subaccount_limit_reached($user_id, $limit)
@@ -148,28 +162,15 @@ class CompanyRegister
         ];
     }
 
-
     private function is_subaccount()
     {
         $current_user_id = get_current_user_id();
         $user_query = new WP_User_Query([
             'meta_key' => 'sfwc_children',
-            'fields' => 'all_with_meta'
+            'fields' => 'all_with_meta',
+            'meta_value' => $current_user_id
         ]);
-        $users = $user_query->get_results();
 
-        foreach ($users as $user) {
-            $children = get_user_meta($user->ID, 'sfwc_children', true);
-            if (is_array($children) && in_array($current_user_id, $children)) {
-                return true;
-            }
-        }
-
-        return false;
+        return !empty($user_query->results);
     }
-
-    
 }
-
-new CompanyRegister();
-?>

@@ -43,7 +43,7 @@ $classes = [
     'CompanySwitcher',
     'SetLoyaltyLevel',
     'EmailOverrideForSubaccounts',
-    'LoyaltyProgramInfoShortcode',
+    // 'LoyaltyProgramInfoShortcode',
 ];
 $path = get_theme_file_path() . '/classes/LoyaltyProgram/';
 

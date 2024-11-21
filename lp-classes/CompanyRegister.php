@@ -22,7 +22,7 @@ class CompanyRegister
 
         //return if subbaccount
         if ($this->is_subaccount()) {
-            return __('You cannot view this content as you are a subaccount.', 'subaccounts-for-woocommerce') .
+            return __('You cannot view this content as you are a sub account. Please switch to parent account.', 'subaccounts-for-woocommerce') .
                 do_shortcode('[sfwc_account_switcher]');
         }
 

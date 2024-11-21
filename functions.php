@@ -18,6 +18,24 @@ if ( ! defined( '_S_VERSION' ) ) {
 //for correct work integration elements - required to be at top for funtion work
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
+
+//debug function
+if (!function_exists('dd')) {
+    function dd($var, $die = true)
+    {
+        // echo '<pre>';
+        // print_r($die);
+        // echo '</pre>';
+        echo '<pre>';
+        print_r($var);
+        echo '</pre>';
+        if ($die ) {
+            die();
+        }
+
+    }
+}
+
 /**
  * Sets up theme defaults and registers support for various WordPress features.
  *
@@ -250,6 +268,8 @@ function viva_master_scripts() {
 add_action( 'wp_enqueue_scripts', 'viva_master_scripts' );
 
 
+
+
 //incs-------
 
 require get_template_directory() . '/inc/autoload.php';
@@ -272,14 +292,6 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 
  //todo temp debugging function
 
- function dd($var, $die=true) {
-	echo '<pre>';
-    print_r($var);
-    echo '</pre>';
-    if ($die) {
-        die();
-    }
-}
 
 
 //my
