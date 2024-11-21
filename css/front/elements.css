@@ -1,0 +1,15 @@
+.v-b-round, .v-b-round-light {
+  border-radius: 6px;
+}
+
+.v-b-round {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.7);
+}
+
+.v-b-round-light {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.v-p-h-micro {
+  padding: 0 5px;
+}

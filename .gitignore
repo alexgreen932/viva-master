@@ -1,0 +1,17 @@
+
+/BACKUP/
+/BACKUP SERVICE/
+/DEV/
+/DEV-PHP/
+/DRAFTS/
+/app/
+/app/vendor/
+/app/composer.lock
+/.vscode/
+/MY-ASSETS/
+silky-subaccounts.code-workspace
+debug.log
+.directory
+.eslintrc
+.megaignore
+.stylelintrc.json

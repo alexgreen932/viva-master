@@ -1,0 +1,33 @@
+
+#v-app{
+	p, div, a, h1, h2, h3, h4, hr, em, li{
+		color: inherit;
+	}
+	ul{
+		margin-top: 0;
+		padding-left: 0;
+		li{
+			list-style: none;
+		}
+	}
+
+}
+#v-main{
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.v-el{
+	padding-left: 10px;
+	&:first-child{
+		padding-left: 40px;
+	}
+}
+
+.widget_meta{
+	li{
+		list-style:none;
+	}
+	li:last-child{
+		display: none;
+	}
+}

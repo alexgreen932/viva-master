@@ -1,0 +1,56 @@
+$primary_bg: #404550;
+$primary_border: #555c6a;
+$primary_col: #edeef1;
+// $primary_input: #404550;
+
+$second_bg: #2b2e35;
+$second_bg: #2a3236;
+
+$mid_bg: #646b7b;
+$mid_border: #838b9c;
+$mid_col: #edeef1;
+
+
+
+
+
+$side_tab_bg: #293237;
+$side_tab_border: #44535b;
+$side_tab_col: #bfbfbf;
+$side_tab_col: #eceff1;
+
+
+
+
+
+@import "front/_vpk-mini-gallery.scss"; 
+@import "front/_base.scss";
+@import "front/_sections.scss";
+@import "front/_selectors.scss";
+@import "front/_menu.scss";
+@import "front/_sidebar.scss";
+@import "front/_animation.scss";
+@import "front/_keys.scss";
+@import "front/_admin-panel.scss";
+@import "front/_extas.scss";
+@import "front/_panels-side.scss";
+@import "front/_ui-elements.scss";
+@import "front/_uk-overwrite.scss";
+@import "front/_vpk-text-effects.scss";
+@import "front/_modals.scss";
+
+
+
+@import "front/_elements.scss";
+@import "front/_shapes.scss";
+
+@import "front/_temp-style.scss";//temp
+@import "front/_style-rs.scss";//temp
+ 
+.card-body .wpdm-download-link{
+  display: none!important;
+}
+.v-but-green{
+  background-color: #00b200;
+  color:#fff;
+}

@@ -1,0 +1,76 @@
+
+#v-show-admin-bar{
+    position: fixed;
+    left: 0;
+    top: 50%;
+    margin-top: -20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 40px;
+  cursor: pointer;
+    background-color: rgba(0, 0, 0,.8);
+    color: #cfcfcf;
+-webkit-border-radius: 0px 6px 6px 0px;
+-moz-border-radius: 0px 6px 6px 0px;
+border-radius: 0px 6px 6px 0px;
+z-index: 1;
+
+}
+#wpadminbar{
+  display: none;
+  // display: flex;
+  top: 0;
+  left: 0;
+  bottom: 0!important;
+  min-width: 200px!important;
+  width: 200px!important;
+  height: 100%!important;
+
+  .ab-sub-wrapper{
+    top: 0;
+    left: 100%;
+    ul{
+      background-color:#000;
+     z-index: 10;     
+    }
+  }
+  li{
+    div{
+      background-color:#000;
+    }
+  }
+  #wp-admin-bar-top-secondary{
+    float: none;
+    width: 200px;
+    text-align: left;
+    border-bottom: 1px solid #999;
+    li{
+      float: left;
+    }
+  }
+  #wp-admin-bar-root-default{
+    margin-top: 32px;
+  }
+  ul{
+    position: fixed;
+    flex-direction:column;
+    li{
+      float: none;
+    }
+  }
+}
+
+.v-show-admin{
+  #wpadminbar, .v-slide-left{
+    display: block;
+      -webkit-animation: fade-in-left 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+          animation: fade-in-left 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+  }
+  #v-show-admin-bar{
+          -webkit-animation: fade-in-left 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+          animation: fade-in-left 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    left: 200px;
+  }
+}

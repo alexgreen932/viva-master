@@ -1,0 +1,46 @@
+.v-sh-rounded {
+  border-radius: 6px;
+}
+
+.v-but-primary {
+  border-radius: 3px;
+  cursor: pointer;
+  background: #404550;
+  color: #e5e5e5;
+}
+
+.v-but-secondary {
+  border-radius: 3px;
+  cursor: pointer;
+  background: #636b7c;
+  color: #e5e5e5;
+}
+
+.v-but-primary:hover, .v-but-secondary:hover {
+  background: #838b9c;
+}
+
+.v-but-medium {
+  display: inline-block;
+  padding: 0 20px;
+  line-height: 35px;
+}
+
+.v-but-small {
+  display: inline-block;
+  padding: 0 10px;
+  line-height: 20px;
+  font-size: 13px;
+}
+
+.v-button {
+  padding: 20px;
+}
+
+.v-b-round {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.7);
+}
+
+.v-b-round-light {
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}

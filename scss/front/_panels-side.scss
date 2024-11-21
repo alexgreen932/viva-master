@@ -1,0 +1,58 @@
+.v-panel-right {
+    display: none;
+  z-index: 999911;
+  .v-bg {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    cursor: pointer;
+  }
+  .v-panel-conent {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 300px;
+    max-width: 80%;
+    overflow-x: auto;
+    background: #404550;
+    padding: 20px;
+    z-index: 9999;
+    box-sizing: border-box;
+    color: #e5e5e5;
+
+    h3, p, div, span, li, i {
+      color: #e5e5e5;
+    }
+    h2, h3, h4 {
+      font-size:1,5rem;
+      border-bottom: 1px solid #404550;
+
+      i {
+        font-size:18px;
+        float: right;
+        cursor: pointer;
+      }
+
+    }
+
+    h3 {
+      border-bottom: 1px solid #e5e5e5;
+
+      i {
+        float: right;
+        cursor: pointer;
+      }
+
+    }
+
+  }
+
+}
+.v-panel-conent.fade-in-right {
+  -webkit-animation: fade-in-right 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+          animation: fade-in-right 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}

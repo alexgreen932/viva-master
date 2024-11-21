@@ -1,0 +1,69 @@
+
+.v-el{
+	cursor: pointer;
+}
+.v-but-green{
+  background-color: #00b200;
+  color:#fff;
+}
+
+.v-box-hover{
+	&:hover{
+  -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+	}
+}
+
+.v-link{
+	cursor: pointer;
+	color:rgba(0,0,60,.7)!important;
+	&:hover{
+		text-decoration: underline;
+		color:rgba(0,0,60,1)!important;
+	}
+}
+.v-link-light{
+	cursor: pointer;
+	color:rgba(193, 208, 253,.7)!important;
+	&:hover{
+		text-decoration: underline;
+		color:rgba(193, 208, 253,1)!important;
+	}
+}
+.v-light{
+	color: #fff;
+	h1, h2, h3, h4, h5, h6, p, span, li, a, i{
+		color:inherit;
+	}
+} 
+.v-light-accent-1{
+	color: #f5f5f5;
+	h1, h2, h3, h4, h5, h6, p, span, li, a, i{
+		color:inherit;
+	}
+}
+.v-light-accent-2{
+	color: #eceff1;
+	h1, h2, h3, h4, h5, h6, p, span, li, a, i{
+		color:inherit;
+	}
+}
+
+
+//older-----------
+
+#v-main{
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+
+.widget_meta{
+	li{
+		list-style:none;
+	}
+	li:last-child{
+		display: none;
+	}
+}

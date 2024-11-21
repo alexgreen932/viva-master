@@ -1,0 +1,93 @@
+.v-modal {
+  display: none;
+  z-index: 999911;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  .v-bg {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, .2);
+    z-index: 999;
+    cursor: pointer;
+
+    i {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      font-size: 18px;
+      color:#fff;
+    }
+
+  }
+
+  .v-modal-content {
+    position: fixed;
+    background: #fff;
+    padding: 20px;
+    z-index: 9999;
+    box-sizing: border-box;
+    overflow: auto;
+    max-height: 80%;
+    h2, h3, h4 {
+      font-size:1,5rem;
+      border-bottom: 1px solid #404550;
+
+      i {
+        font-size:18px;
+        float: right;
+        cursor: pointer;
+      }
+
+    }
+
+    .vv-footer {
+      border-top: 1px solid #404550;
+      padding-top: 7px;
+
+      button {
+        float: right;
+      }
+
+    }
+
+  }
+
+  .v-modal-1200 {
+    width: 1200px;
+    top: 15%;
+    left: 50%;
+    margin-left: -600px;
+  }
+
+  .v-modal-600 {
+    width: 600px;
+    top: 100px;
+    left: 50%;
+    margin-left: -300px;
+  }
+
+  .v-modal-800 {
+    width: 800px;
+    top: 15%;
+    left: 50%;
+    margin-left: -400px;
+  }
+
+}
+
+.v-modal.fade-in-top {
+  display: block;
+  -webkit-animation: fade-in-top 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+          animation: fade-in-top 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+.v-modal.fade-out-top {
+  display: none;
+  -webkit-animation: fade-out-top 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+          animation: fade-out-top 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}

@@ -1,0 +1,65 @@
+
+.v-sh-rounded{
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+}
+
+.v-but-primary{
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	cursor: pointer;
+	// border: 1px solid #636b7c;
+	background-color:#404550;
+	color:#e5e5e5;
+}
+
+.v-but-secondary, #v-headerbar .v-el select{
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	cursor: pointer;
+	// border: 1px solid #838b9c;
+	background-color:#636b7c;
+	color:#e5e5e5!important;
+}
+.v-but-primary, .v-but-secondary{
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	&:hover{
+	background:#838b9c;	
+	}
+	select, input{
+		margin-top: 0!important;
+		margin-bottom: 0!important;
+		background-color:transparent!important;
+		color:inherit!important;
+		padding: 0 3px!important;
+	}
+}
+.v-but-medium{
+	display: inline-block;
+	padding: 0 20px;
+	line-height: 35px;
+}
+.v-but-small, #v-headerbar div select{
+	display: inline-block;
+	padding: 0 10px;
+	line-height: 20px;
+	font-size: 13px;
+}
+#v-headerbar div select{
+	margin-top: 4!important;
+	margin-bottom: 0!important;
+}
+.v-button{
+	padding: 20px;
+}
+.v-b-round{
+	border-bottom: 1px solid rgba(0, 0, 0, .7);
+}
+.v-b-round-light{
+	border: 1px solid rgba(255, 255, 255, .7);
+}

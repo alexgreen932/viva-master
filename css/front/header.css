@@ -1,0 +1,38 @@
+#v-headerbar {
+  height: 32px;
+  line-height: 32px;
+  background: #2a2d36;
+  margin-bottom: 0 !important;
+  -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+#v-headerbar .v-el input, #v-headerbar .v-el select {
+  border-radius: 4px !important;
+  border-width: 0 !important;
+  border-image-width: 0 !important;
+}
+
+#v-navbar, #v-footer {
+  line-height: 70px;
+  background: #404550;
+  color: #dcdee3;
+}
+#v-navbar .v-row, #v-footer .v-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+#v-navbar .v-row .v-el, #v-footer .v-row .v-el {
+  line-height: 80px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: inherit !important;
+}
+#v-navbar .v-row .v-el div, #v-navbar .v-row .v-el span, #v-navbar .v-row .v-el li, #v-navbar .v-row .v-el a, #v-footer .v-row .v-el div, #v-footer .v-row .v-el span, #v-footer .v-row .v-el li, #v-footer .v-row .v-el a {
+  line-height: 24px;
+  color: inherit !important;
+}

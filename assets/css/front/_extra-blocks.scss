@@ -1,0 +1,136 @@
+
+.v-modal-bg{
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 999;
+  cursor: pointer;
+  i{
+    position: fixed;
+    top: 10px;
+    right: 10px;
+  }
+}
+.v-modal{
+  display: none;
+  position: fixed;
+  background: #fff;
+  padding: 20px;
+  z-index: 9999;
+  box-sizing: border-box;
+  overflow-x: auto;
+  h2{
+    border-bottom: 1px solid #404550;
+    i{
+      float: right;
+      cursor: pointer;
+    }
+  }
+  .vv-footer{
+    border-top: 1px solid #404550;
+    padding-top: 7px;
+    button{
+      float: right;
+    }
+  }
+}
+.v-modal-1200{
+  width: 1200px;
+  top: 10%;
+  left: 50%;
+  margin-left: -600px;
+  bottom: 10%;
+}
+.v-modal-600{
+  width: 600px;
+  top: 10%;
+  left: 50%;
+  margin-left: -300px;
+}
+.v-modal-800{
+  width: 800px;
+  top: 10%;
+  left: 50%;
+  margin-left: -400px;
+}
+
+.v-modal-close{
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+
+//------------------------------------
+
+.v-panel-bg{
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,.1);
+  z-index: 999;
+  cursor: pointer;
+  i{
+    position: fixed;
+    top: 10px;
+    right: 10px;
+  }
+}
+.v-panel{
+  display: none;
+  position: fixed;
+  background: #404550;
+  padding: 20px;
+  z-index: 9999;
+  box-sizing: border-box;
+  color:#e5e5e5;
+  h3, p, div, span, li, i{
+    color:#e5e5e5;
+  }
+  h3{
+    border-bottom: 1px solid #e5e5e5;
+    i{
+      float: right;
+      cursor: pointer;
+    }
+  }
+/*   .vv-footer{
+    border-top: 1px solid #404550;
+    padding-top: 7px;
+    button{
+      float: right;
+    }
+  } */
+}
+.v-panel-right{
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 300px;
+  max-width: 80%;
+  overflow-x: auto;
+}
+
+
+//animations -----------------
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+.slide_right-enter-active, .slide_right-leave-active {
+  transition: opacity .5s, right .5s;
+}
+.slide_right-enter, .slide_right-leave-to {
+  right: -50px;
+  opacity: 0;
+}

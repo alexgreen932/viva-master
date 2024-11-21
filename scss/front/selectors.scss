@@ -1,0 +1,54 @@
+
+//v-b border
+.v-b-round, .v-b-round-light{
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+}
+.v-b-round{
+	border-bottom: 1px solid rgba(0, 0, 0, .7);
+}
+.v-b-round-light{
+	border: 1px solid rgba(255, 255, 255, .7);
+}
+//v-p padding hor 
+.v-p-h-micro{
+	padding: 0 5px;
+}
+.v-p-no{
+	padding: 0!important;
+}
+//flex
+.v-f-cc{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+//ve - elements types
+.ve-tr{
+	padding-top: 7px;
+	i{
+		font-size:24px;
+		color: #83cffb;
+
+	}
+}
+
+//dropdow
+.v-icon-drop{
+	position: relative;
+	.v-dropdown{
+		position: absolute;
+		top: 100%;
+		padding: 20px;
+		background: #fff;
+		box-shadow: 0 5px 15px rgb(0 0 0 / 8%);
+	}
+	&.vv-right .v-dropdown{
+		right: 0;
+	}
+	&.vv-lefy .v-dropdown{
+		left: 0;
+	}
+}
