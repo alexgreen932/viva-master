@@ -34,18 +34,20 @@ if (!function_exists('jet_autoloader')) {
 
 // Example usage
 $classes = [
-    'LoyaltyProgramDiscounts',
-    'LoyaltyProgramService',
-    'LoyaltyProgramCalculator',
-    'LoyaltyProgramSidebarData',
-    'CompanyRegister',
-    'CompanyProfile',
-    'CompanySwitcher',
-    'SetLoyaltyLevel',
-    'EmailOverrideForSubaccounts',
+    // 'LoyaltyProgramDiscounts',
+    // 'LoyaltyProgramService',
+    // 'LoyaltyProgramCalculator',
+    // 'LoyaltyProgramSidebarData',
+    // 'CompanyRegister',
+    // 'CompanyProfile',
+    // 'CompanySwitcher',
+    // 'SetLoyaltyLevel',
+    // 'EmailOverrideForSubaccounts',
     // 'LoyaltyProgramInfoShortcode',
+    "ProductBrands"
 ];
-$path = get_theme_file_path() . '/classes/LoyaltyProgram/';
+// $path = get_theme_file_path() . '/classes/LoyaltyProgram/';
+$path = get_theme_file_path() . '/classes/';
 
 jet_autoloader($classes, $path);
 

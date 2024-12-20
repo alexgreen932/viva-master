@@ -113,7 +113,7 @@ class CompanyRegister
 
         // Handling redirection based on the button clicked
         if (isset($_POST['save_and_redirect'])) {
-            wp_redirect('https://example.com'); // Redirect to your chosen URL
+            wp_redirect('http://dev2411.magicjet.org/companies/'); // Redirect to your chosen URL
             exit;
         }
 

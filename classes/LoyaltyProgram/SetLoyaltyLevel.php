@@ -52,4 +52,3 @@ class SetLoyaltyLevel {
     }
 }
 
-$set_loyalty_level = new SetLoyaltyLevel();

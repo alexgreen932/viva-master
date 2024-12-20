@@ -158,11 +158,6 @@ class LoyaltyProgramService
 }
 
 
-// $lp_service = new LoyaltyProgramService();
-
-// $user_id = get_current_user_id();
-
-// dd($lp_service->get_loyalty_data( $user_id ) );
 
 
 

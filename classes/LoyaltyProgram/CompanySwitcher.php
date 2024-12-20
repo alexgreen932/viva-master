@@ -204,4 +204,3 @@ class CompanySwitcher
     }
 }
 
-new CompanySwitcher();
