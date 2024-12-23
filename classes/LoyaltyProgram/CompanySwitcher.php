@@ -1,206 +1,203 @@
 <?php
 
-//namespace SilkyDrum\WooCommerce;
+// namespace SilkyDrum\WooCommerce;
 
-class CompanySwitcher
-{
-    public function __construct()
-    {
-        add_action('init', [$this, 'register_shortcodes']);
-        add_action('wp_ajax_switch_to_account', [$this, 'switch_to_account']);
-        add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
-    }
+class CompanySwitcher {
 
-    public function register_shortcodes()
-    {
-        add_shortcode('sfwc_account_switcher', [$this, 'account_switcher_shortcode']);
-    }
+	public function __construct() {
+		add_action( 'init', array( $this, 'register_shortcodes' ) );
+		add_action( 'wp_ajax_switch_to_account', array( $this, 'switch_to_account' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+	}
 
-    public function account_switcher_shortcode()
-    {
-        if (!is_user_logged_in()) {
-            return __('You need to be logged in to view this content.', 'subaccounts-for-woocommerce');
-        }
+	public function register_shortcodes() {
+		add_shortcode( 'sfwc_account_switcher', array( $this, 'account_switcher_shortcode' ) );
+	}
 
-        $current_user = wp_get_current_user();
-        $user_id = get_current_user_id();
-        $is_subaccount = $this->is_subaccount();
+	public function account_switcher_shortcode() {
+		if ( ! is_user_logged_in() ) {
+			return __( 'You need to be logged in to view this content.', 'subaccounts-for-woocommerce' );
+		}
 
-        // Fetch parent account ID if subaccount
-        $parent_id = $is_subaccount ? $this->get_parent_id() : null;
+		$current_user  = wp_get_current_user();
+		$user_id       = get_current_user_id();
+		$is_subaccount = $this->is_subaccount();
 
-        // Get subaccounts from the parent account
-        $children_ids = get_user_meta($parent_id ?? $user_id, 'sfwc_children', true) ?: [];
+		// Fetch parent account ID if subaccount
+		$parent_id = $is_subaccount ? $this->get_parent_id() : null;
 
-        ob_start();
-        echo '<div id="sfwc-user-switcher-pane">';
+		// Get subaccounts from the parent account
+		$children_ids = get_user_meta( $parent_id ?? $user_id, 'sfwc_children', true ) ?: array();
 
-        // Render switcher UI
-        echo '<h3>' . esc_html__('Switch Accounts', 'subaccounts-for-woocommerce') . '</h3>';
-        echo '<p><strong>' . esc_html__('Logged in as: ', 'subaccounts-for-woocommerce') . '</strong>' . esc_html($current_user->user_login) . ' (' . esc_html($current_user->user_email) . ')</p>';
-        echo '<form id="sfwc-switch-form" method="post">';
-        echo '<select name="target_account" required>';
+		ob_start();
+		echo '<div id="sfwc-user-switcher-pane">';
 
-        // If subaccount, add "Parent Account" option at the top
-        if ($is_subaccount && $parent_id) {
-            $parent_user = get_userdata($parent_id);
-            echo '<option value="' . esc_attr($parent_id) . '">' . esc_html__('Parent Account', 'subaccounts-for-woocommerce') . ' (' . esc_html($parent_user->user_email) . ')</option>';
-        }
+		// Render switcher UI
+		echo '<h3>' . esc_html__( 'Switch Accounts', 'subaccounts-for-woocommerce' ) . '</h3>';
+		echo '<p><strong>' . esc_html__( 'Logged in as: ', 'subaccounts-for-woocommerce' ) . '</strong>' . esc_html( $current_user->user_login ) . ' (' . esc_html( $current_user->user_email ) . ')</p>';
+		echo '<form id="sfwc-switch-form" method="post">';
+		echo '<select name="target_account" required>';
 
-        // List subaccounts
-        foreach ($children_ids as $child_id) {
-            $child_user = get_userdata($child_id);
-            if ($child_user) {
-                echo '<option value="' . esc_attr($child_id) . '">' . esc_html($child_user->user_login) . ' (' . esc_html($child_user->user_email) . ')</option>';
-            }
-        }
+		// If subaccount, add "Parent Account" option at the top
+		if ( $is_subaccount && $parent_id ) {
+			$parent_user = get_userdata( $parent_id );
+			echo '<option value="' . esc_attr( $parent_id ) . '">' . esc_html__( 'Parent Account', 'subaccounts-for-woocommerce' ) . ' (' . esc_html( $parent_user->user_email ) . ')</option>';
+		}
 
-        echo '</select>';
-        echo '<button type="submit">' . esc_attr__('Switch Account', 'subaccounts-for-woocommerce') . '</button>';
-        echo '</form>';
-        ?>
+		// List subaccounts
+		foreach ( $children_ids as $child_id ) {
+			$child_user = get_userdata( $child_id );
+			if ( $child_user ) {
+				echo '<option value="' . esc_attr( $child_id ) . '">' . esc_html( $child_user->user_login ) . ' (' . esc_html( $child_user->user_email ) . ')</option>';
+			}
+		}
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const switchForm = document.querySelector("#sfwc-switch-form");
+		echo '</select>';
+		echo '<button type="submit">' . esc_attr__( 'Switch Account', 'subaccounts-for-woocommerce' ) . '</button>';
+		echo '</form>';
+		?>
 
-                switchForm.addEventListener("submit", function (event) {
-                    event.preventDefault();
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				const switchForm = document.querySelector("#sfwc-switch-form");
 
-                    const selectedAccount = switchForm.querySelector("select[name='target_account']").value;
-                    const nonce = "<?php echo wp_create_nonce('sfwc_switch_nonce'); ?>";
-                    const ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
+				switchForm.addEventListener("submit", function (event) {
+					event.preventDefault();
 
-                    // Add loader to the page
-                    const loader = document.createElement("div");
-                    loader.innerHTML = "Moment Switching your Company...";
-                    loader.style.cssText = "position:fixed; background:#fff; padding:20px; width:400px; text-align:center; top: 200px; left:50%; margin-left: -200px; z-index: 1000;";
-                    document.body.appendChild(loader);
+					const selectedAccount = switchForm.querySelector("select[name='target_account']").value;
+					const nonce = "<?php echo wp_create_nonce( 'sfwc_switch_nonce' ); ?>";
+					const ajaxurl = "<?php echo admin_url( 'admin-ajax.php' ); ?>";
 
-                    jQuery.ajax({
-                        url: ajaxurl,
-                        type: "POST",
-                        data: {
-                            action: "switch_to_account",
-                            target_user_id: selectedAccount,
-                            security: nonce
-                        },
-                        success: function (response) {
-                            if (response.success) {
-                                // Redirect to the same page URL
-                                window.location.href = window.location.href.split("#")[0];
-                            } else {
-                                alert("Switching failed. Please try again.");
-                                document.body.removeChild(loader); // Remove loader on error
-                            }
-                        },
-                        error: function () {
-                            alert("Switching failed. Please try again.");
-                            document.body.removeChild(loader); // Remove loader on error
-                        }
-                    });
-                });
-            });
+					// Add loader to the page
+					const loader = document.createElement("div");
+					loader.innerHTML = "Moment Switching your Company...";
+					loader.style.cssText = "position:fixed; background:#fff; padding:20px; width:400px; text-align:center; top: 200px; left:50%; margin-left: -200px; z-index: 1000;";
+					document.body.appendChild(loader);
 
-        </script>
+					jQuery.ajax({
+						url: ajaxurl,
+						type: "POST",
+						data: {
+							action: "switch_to_account",
+							target_user_id: selectedAccount,
+							security: nonce
+						},
+						success: function (response) {
+							if (response.success) {
+								// Redirect to the same page URL
+								window.location.href = window.location.href.split("#")[0];
+							} else {
+								alert("Switching failed. Please try again.");
+								document.body.removeChild(loader); // Remove loader on error
+							}
+						},
+						error: function () {
+							alert("Switching failed. Please try again.");
+							document.body.removeChild(loader); // Remove loader on error
+						}
+					});
+				});
+			});
 
-        <?php
-        echo '</div>';
-        return ob_get_clean();
-    }
-    public function switch_to_account()
-    {
-        check_ajax_referer('sfwc_switch_nonce', 'security');
-    
-        if (!isset($_POST['target_user_id'])) {
-            wp_send_json_error(['message' => 'No target account specified']);
-            return;
-        }
-    
-        $target_user_id = intval($_POST['target_user_id']);
-        $current_user_id = get_current_user_id();
-        $is_subaccount = $this->is_subaccount();
-    
-        if ($is_subaccount) {
-            // Get the parent ID if user is a subaccount
-            $parent_id = $this->get_parent_id();
-            if ($parent_id) {
-                // If the target account is the parent, switch back to parent
-                if ($parent_id === $target_user_id) {
-                    wp_clear_auth_cookie();
-                    wp_set_current_user($parent_id);
-                    wp_set_auth_cookie($parent_id);
-                    wp_send_json_success(['redirect' => wc_get_page_permalink('myaccount')]);
-                } else {
-                    // Allow switching between subaccounts
-                    $children = get_user_meta($parent_id, 'sfwc_children', true) ?: [];
-                    if (in_array($target_user_id, $children)) {
-                        wp_clear_auth_cookie();
-                        wp_set_current_user($target_user_id);
-                        wp_set_auth_cookie($target_user_id);
-                        wp_send_json_success(['redirect' => wc_get_page_permalink('myaccount')]);
-                    } else {
-                        wp_send_json_error(['message' => 'Invalid subaccount selection']);
-                    }
-                }
-            } else {
-                wp_send_json_error(['message' => 'Parent account not found']);
-            }
-        } else {
-            // If user is a parent account, allow switching to subaccounts
-            $children = get_user_meta($current_user_id, 'sfwc_children', true) ?: [];
-            if (in_array($target_user_id, $children)) {
-                wp_clear_auth_cookie();
-                wp_set_current_user($target_user_id);
-                wp_set_auth_cookie($target_user_id);
-                wp_send_json_success(['redirect' => wc_get_page_permalink('myaccount')]);
-            } else {
-                wp_send_json_error(['message' => 'Invalid subaccount selection']);
-            }
-        }
-    }
-    
+		</script>
 
-    public function enqueue_scripts()
-    {
-        // This method can remain empty if no additional scripts are needed
-    }
+		<?php
+		echo '</div>';
+		return ob_get_clean();
+	}
+	public function switch_to_account() {
+		check_ajax_referer( 'sfwc_switch_nonce', 'security' );
 
-    private function get_parent_id()
-    {
-        $current_user_id = get_current_user_id();
+		if ( ! isset( $_POST['target_user_id'] ) ) {
+			wp_send_json_error( array( 'message' => 'No target account specified' ) );
+			return;
+		}
 
-        $user_query = new \WP_User_Query([
-            'meta_key' => 'sfwc_children',
-            'fields' => 'all_with_meta'
-        ]);
-        $users = $user_query->get_results();
+		$target_user_id  = intval( $_POST['target_user_id'] );
+		$current_user_id = get_current_user_id();
+		$is_subaccount   = $this->is_subaccount();
 
-        foreach ($users as $user) {
-            $children = get_user_meta($user->ID, 'sfwc_children', true);
-            if (is_array($children) && in_array($current_user_id, $children)) {
-                return $user->ID;
-            }
-        }
-        return null;
-    }
+		if ( $is_subaccount ) {
+			// Get the parent ID if user is a subaccount
+			$parent_id = $this->get_parent_id();
+			if ( $parent_id ) {
+				// If the target account is the parent, switch back to parent
+				if ( $parent_id === $target_user_id ) {
+					wp_clear_auth_cookie();
+					wp_set_current_user( $parent_id );
+					wp_set_auth_cookie( $parent_id );
+					wp_send_json_success( array( 'redirect' => wc_get_page_permalink( 'myaccount' ) ) );
+				} else {
+					// Allow switching between subaccounts
+					$children = get_user_meta( $parent_id, 'sfwc_children', true ) ?: array();
+					if ( in_array( $target_user_id, $children ) ) {
+						wp_clear_auth_cookie();
+						wp_set_current_user( $target_user_id );
+						wp_set_auth_cookie( $target_user_id );
+						wp_send_json_success( array( 'redirect' => wc_get_page_permalink( 'myaccount' ) ) );
+					} else {
+						wp_send_json_error( array( 'message' => 'Invalid subaccount selection' ) );
+					}
+				}
+			} else {
+				wp_send_json_error( array( 'message' => 'Parent account not found' ) );
+			}
+		} else {
+			// If user is a parent account, allow switching to subaccounts
+			$children = get_user_meta( $current_user_id, 'sfwc_children', true ) ?: array();
+			if ( in_array( $target_user_id, $children ) ) {
+				wp_clear_auth_cookie();
+				wp_set_current_user( $target_user_id );
+				wp_set_auth_cookie( $target_user_id );
+				wp_send_json_success( array( 'redirect' => wc_get_page_permalink( 'myaccount' ) ) );
+			} else {
+				wp_send_json_error( array( 'message' => 'Invalid subaccount selection' ) );
+			}
+		}
+	}
 
-    private function is_subaccount()
-    {
-        $current_user_id = get_current_user_id();
-        $user_query = new \WP_User_Query([
-            'meta_key' => 'sfwc_children',
-            'fields' => 'all_with_meta'
-        ]);
-        $users = $user_query->get_results();
 
-        foreach ($users as $user) {
-            $children = get_user_meta($user->ID, 'sfwc_children', true);
-            if (is_array($children) && in_array($current_user_id, $children)) {
-                return true;
-            }
-        }
-        return false;
-    }
+	public function enqueue_scripts() {
+		// This method can remain empty if no additional scripts are needed
+	}
+
+	private function get_parent_id() {
+		$current_user_id = get_current_user_id();
+
+		$user_query = new \WP_User_Query(
+			array(
+				'meta_key' => 'sfwc_children',
+				'fields'   => 'all_with_meta',
+			)
+		);
+		$users      = $user_query->get_results();
+
+		foreach ( $users as $user ) {
+			$children = get_user_meta( $user->ID, 'sfwc_children', true );
+			if ( is_array( $children ) && in_array( $current_user_id, $children ) ) {
+				return $user->ID;
+			}
+		}
+		return null;
+	}
+
+	private function is_subaccount() {
+		$current_user_id = get_current_user_id();
+		$user_query      = new \WP_User_Query(
+			array(
+				'meta_key' => 'sfwc_children',
+				'fields'   => 'all_with_meta',
+			)
+		);
+		$users           = $user_query->get_results();
+
+		foreach ( $users as $user ) {
+			$children = get_user_meta( $user->ID, 'sfwc_children', true );
+			if ( is_array( $children ) && in_array( $current_user_id, $children ) ) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
 

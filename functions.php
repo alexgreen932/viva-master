@@ -7,7 +7,7 @@
  * @package Viva_Master
  */
 
-define('VTROOT', get_template_directory_uri(__FILE__));
+define( 'VTROOT', get_template_directory_uri( __FILE__ ) );
 
 
 if ( ! defined( '_S_VERSION' ) ) {
@@ -15,25 +15,23 @@ if ( ! defined( '_S_VERSION' ) ) {
 	define( '_S_VERSION', '1.0.0' );
 }
 
-//for correct work integration elements - required to be at top for funtion work
+// for correct work integration elements - required to be at top for funtion work
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 
-//debug function
-if (!function_exists('dd')) {
-    function dd($var, $die = true)
-    {
-        // echo '<pre>';
-        // print_r($die);
-        // echo '</pre>';
-        echo '<pre>';
-        print_r($var);
-        echo '</pre>';
-        if ($die ) {
-            die();
-        }
-
-    }
+// debug function
+if ( ! function_exists( 'dd' ) ) {
+	function dd( $var, $die = true ) {
+		// echo '<pre>';
+		// print_r($die);
+		// echo '</pre>';
+		echo '<pre>';
+		print_r( $var );
+		echo '</pre>';
+		if ( $die ) {
+			die();
+		}
+	}
 }
 
 /**
@@ -95,9 +93,9 @@ function viva_master_setup() {
 	);
 
 	// Set up the WordPress core custom background feature.
-/*
-//dev
- 	add_theme_support(
+	/*
+	//dev
+	add_theme_support(
 		'custom-background',
 		apply_filters(
 			'viva_master_custom_background_args',
@@ -125,7 +123,7 @@ function viva_master_setup() {
 			'flex-height' => true,
 		)
 	);
-	//vv funcs
+	// vv funcs
 	//
 }
 
@@ -203,43 +201,43 @@ add_action( 'widgets_init', 'viva_master_widgets_init' );
 
 /**
  * theme kit functions
+ *
  * @param  [type] $id [description]
  * @return [type]     [description]
  */
-function v_user_got_kit($id) {
-	if (is_plugin_active( 'woocommerce/woocommerce.php')) {
-		if (is_user_logged_in()) {
-		    global $woocommerce;
-		    $user_id = get_current_user_id();
-		    $current_user= wp_get_current_user();
-		    $customer_email = $current_user->email; 
-			if ( wc_customer_bought_product( $customer_email, $user_id, $id )) {  
-			   return true;
-			 }else{
-			   return false;  
-			 }
+function v_user_got_kit( $id ) {
+	if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+		if ( is_user_logged_in() ) {
+			global $woocommerce;
+			$user_id        = get_current_user_id();
+			$current_user   = wp_get_current_user();
+			$customer_email = $current_user->email;
+			if ( wc_customer_bought_product( $customer_email, $user_id, $id ) ) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
-
 }
 add_action( 'woocommerce_after_shop_loop_item', 'v_user_got_kit', 30 );
 
-//removes admin bar for not admin//todo add it as option
+// removes admin bar for not admin//todo add it as option
 function remove_admin_login_header() {
-    remove_action('wp_head', '_admin_bar_bump_cb');
+	remove_action( 'wp_head', '_admin_bar_bump_cb' );
 }
-add_action('get_header', 'remove_admin_login_header');
+add_action( 'get_header', 'remove_admin_login_header' );
 
 
 // show element if 0-show in all, 1-selected, 2 on all exept selected
-function v_show($tp,$ids){
+function v_show( $tp, $ids ) {
 	$pid = get_the_ID();
-	if ($tp == 1 ) {
+	if ( $tp == 1 ) {
 		// code...
-	} elseif ($tp == 2) {
-		if (in_array($pid, $ids)) {
-		    return false;
-		}else{
+	} elseif ( $tp == 2 ) {
+		if ( in_array( $pid, $ids ) ) {
+			return false;
+		} else {
 			return true;
 		}
 	} else {
@@ -253,13 +251,13 @@ function viva_master_scripts() {
 	wp_enqueue_style( 'viva-master-style', get_stylesheet_uri(), array(), _S_VERSION );
 	wp_enqueue_style( 'viva-fa', 'https://use.fontawesome.com/releases/v5.15.4/css/all.css', array(), _S_VERSION );
 	wp_enqueue_style( 'viva-uikit', get_template_directory_uri() . '/assets/css/uikit.css', array(), _S_VERSION );
-	wp_enqueue_style( 'viva-style', get_template_directory_uri() . '/assets/css/style.css', array(), _S_VERSION ); //dev master
-	wp_enqueue_style( 'viva-st1', 'http://vivapro.net/wp-content/themes/storefront/assets/css/style.css', array(), _S_VERSION ); //child
-	//wp_enqueue_style( 'viva-dev', site_url() . '/wp-content/plugins/viva-theme-maker/assets/css/style.css', array(), _S_VERSION );//dev only
+	wp_enqueue_style( 'viva-style', get_template_directory_uri() . '/assets/css/style.css', array(), _S_VERSION ); // dev master
+	wp_enqueue_style( 'viva-st1', 'http://vivapro.net/wp-content/themes/storefront/assets/css/style.css', array(), _S_VERSION ); // child
+	// wp_enqueue_style( 'viva-dev', site_url() . '/wp-content/plugins/viva-theme-maker/assets/css/style.css', array(), _S_VERSION );//dev only
 	wp_style_add_data( 'viva-master-style', 'rtl', 'replace' );
 	wp_enqueue_script( 'viva-master-navigation', get_template_directory_uri() . '/assets/js/navigation.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'viva-uikit', get_template_directory_uri() . '/assets/js/uikit.min.js', array(), _S_VERSION, true );
-	wp_enqueue_script( 'viva-script', get_template_directory_uri() . '/assets/js/viva.js', array('jquery'), _S_VERSION, true );
+	wp_enqueue_script( 'viva-script', get_template_directory_uri() . '/assets/js/viva.js', array( 'jquery' ), _S_VERSION, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -270,7 +268,7 @@ add_action( 'wp_enqueue_scripts', 'viva_master_scripts' );
 
 
 
-//incs-------
+// incs-------
 
 require get_template_directory() . '/inc/autoload.php';
 
@@ -279,7 +277,7 @@ require get_template_directory() . '/inc/custom-header.php';
 
 require get_template_directory() . '/inc/template-tags.php';
 
-//Functions which enhance the theme by hooking into WordPress.
+// Functions which enhance the theme by hooking into WordPress.
 
 require get_template_directory() . '/inc/template-functions.php';
 
@@ -290,11 +288,10 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
- //todo temp debugging function
+// todo temp debugging function
 
 
 
-//my
+// my
 require get_template_directory() . '/inc/class-theme.php';
 $GLOBALS['vv'] = new Viva_Theme();
-
